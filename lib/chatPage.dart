@@ -149,7 +149,10 @@ class PostWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4),
                     // 色はここで変えられます
                     // [100] この数字を小さくすると色が薄くなります。
-                    color: Colors.blue[100],
+                    color:
+                        FirebaseAuth.instance.currentUser!.uid == post.posterId
+                            ? Colors.amber[100]
+                            : Colors.blue[100],
                   ),
                   child: Text(post.text),
                 ),
