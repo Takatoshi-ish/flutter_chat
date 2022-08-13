@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './main.dart';
 import './post.dart';
@@ -119,18 +120,30 @@ class PostWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                post.posterName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      post.posterName,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      // toDate() で Timestamp から DateTime に変換できます。
+                      DateFormat('MM/dd HH:mm').format(post.createdAt.toDate()),
+                      style: const TextStyle(fontSize: 10),
+                    ),
+                  ],
                 ),
-              ),
-              Text(post.text),
-            ],
+                Text(post.text),
+              ],
+            ),
           ),
         ],
       ),
