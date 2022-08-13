@@ -59,7 +59,7 @@ class _ChatPageState extends State<ChatPage> {
                     // これは withConverter を使ったことにより得られる恩恵です。
                     // 何もしなければこのデータ型は Map になります。
                     final post = docs[index].data();
-                    return Text(post.text);
+                    return PostWidget(post: post);
                   },
                 );
               },
@@ -96,5 +96,19 @@ class _ChatPageState extends State<ChatPage> {
         ],
       ),
     );
+  }
+}
+
+class PostWidget extends StatelessWidget {
+  const PostWidget({
+    Key? key,
+    required this.post,
+  }) : super(key: key);
+
+  final Post post;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(post.text);
   }
 }
