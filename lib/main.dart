@@ -1,6 +1,14 @@
+import 'package:flutter_chat/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  // main 関数でも async が使えます
+  WidgetsFlutterBinding.ensureInitialized(); // runApp 前に何かを実行し+たいときはこれが必要です。
+  await Firebase.initializeApp(
+    // これが Firebase の初期化処理です。
+    options: DefaultFirebaseOptions.android,
+  );
   runApp(const MyApp());
 }
 
