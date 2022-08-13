@@ -220,6 +220,7 @@ class PostWidget extends StatelessWidget {
                                   return AlertDialog(
                                     content: TextFormField(
                                       initialValue: post.text,
+                                      autofocus: true,
                                     ),
                                   );
                                 },
