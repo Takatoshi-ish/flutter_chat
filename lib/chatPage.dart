@@ -156,6 +156,15 @@ class PostWidget extends StatelessWidget {
                   ),
                   child: Text(post.text),
                 ),
+                // List の中の場合は if 文であっても {} この波かっこはつけなくてよい
+                if (FirebaseAuth.instance.currentUser!.uid == post.posterId)
+                  IconButton(
+                    onPressed: () {
+                      // 削除は reference に対して delete() を呼ぶだけでよい。
+                      post.reference.delete();
+                    },
+                    icon: const Icon(Icons.delete),
+                  ),
               ],
             ),
           ),
