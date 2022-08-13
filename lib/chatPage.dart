@@ -93,10 +93,32 @@ class _ChatPageState extends State<ChatPage> {
               },
             ),
           ),
-          TextFormField(
-            onFieldSubmitted: (text) {
-              sendPost(text);
-            },
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: TextFormField(
+              decoration: InputDecoration(
+                // 未選択時の枠線
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.amber),
+                ),
+                // 選択時の枠線
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(
+                    color: Colors.amber,
+                    width: 2,
+                  ),
+                ),
+                // 中を塗りつぶす色
+                fillColor: Colors.amber[50],
+                // 中を塗りつぶすかどうか
+                filled: true,
+              ),
+              onFieldSubmitted: (text) {
+                sendPost(text);
+              },
+            ),
           ),
         ],
       ),
