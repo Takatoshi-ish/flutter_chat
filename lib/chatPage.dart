@@ -221,6 +221,10 @@ class PostWidget extends StatelessWidget {
                                     content: TextFormField(
                                       initialValue: post.text,
                                       autofocus: true,
+                                      onFieldSubmitted: (newText) {
+                                        post.reference
+                                            .update({'text': newText});
+                                      },
                                     ),
                                   );
                                 },
