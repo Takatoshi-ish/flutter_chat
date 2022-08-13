@@ -224,6 +224,7 @@ class PostWidget extends StatelessWidget {
                                       onFieldSubmitted: (newText) {
                                         post.reference
                                             .update({'text': newText});
+                                        Navigator.of(context).pop();
                                       },
                                     ),
                                   );
