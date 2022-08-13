@@ -42,6 +42,16 @@ class _ChatPageState extends State<ChatPage> {
     newDocumentReference.set(newPost);
   }
 
+  final controller = TextEditingController();
+
+  /// この dispose 関数はこのWidgetが使われなくなったときに実行されます。
+  @override
+  void dispose() {
+    // TextEditingController は使われなくなったら必ず dispose する必要があります。
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,6 +106,8 @@ class _ChatPageState extends State<ChatPage> {
           Padding(
             padding: const EdgeInsets.all(8),
             child: TextFormField(
+              // 上で作ったコントローラーを与えます。
+              controller: controller,
               decoration: InputDecoration(
                 // 未選択時の枠線
                 enabledBorder: OutlineInputBorder(
@@ -117,6 +129,8 @@ class _ChatPageState extends State<ChatPage> {
               ),
               onFieldSubmitted: (text) {
                 sendPost(text);
+                // 入力中の文字列を削除します。
+                controller.clear();
               },
             ),
           ),
