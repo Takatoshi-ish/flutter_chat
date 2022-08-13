@@ -212,7 +212,17 @@ class PostWidget extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              //　ダイアログを表示する場合は `showDialog` 関数を実行します。
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    content: Text('ダイアログ'),
+                                  );
+                                },
+                              );
+                            },
                             icon: const Icon(Icons.edit),
                           ),
                           IconButton(
