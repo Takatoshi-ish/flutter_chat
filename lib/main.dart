@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat/post.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'chatPage.dart';
+
 Future<void> main() async {
   // main 関数でも async が使えます
   WidgetsFlutterBinding.ensureInitialized(); // runApp 前に何かを実行し+たいときはこれが必要です。
@@ -65,6 +67,17 @@ class _SignInPageState extends State<SignInPage> {
             await signInWithGoogle();
             // ログインが成功すると FirebaseAuth.instance.currentUser にログイン中のユーザーの情報が入ります
             print(FirebaseAuth.instance.currentUser?.displayName);
+
+            // ログインに成功したら ChatPage に遷移します。
+            // 前のページに戻らせないようにするにはpushAndRemoveUntilを使います。
+            if (mounted) {
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) {
+                  return const ChatPage();
+                }),
+                (route) => false,
+              );
+            }
           },
         ),
       ),
