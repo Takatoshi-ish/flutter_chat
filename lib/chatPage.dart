@@ -141,7 +141,18 @@ class PostWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(post.text),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    // 角丸にするにはこれを追加します。
+                    // 4 の数字を大きくするともっと丸くなります。
+                    borderRadius: BorderRadius.circular(4),
+                    // 色はここで変えられます
+                    // [100] この数字を小さくすると色が薄くなります。
+                    color: Colors.blue[100],
+                  ),
+                  child: Text(post.text),
+                ),
               ],
             ),
           ),
