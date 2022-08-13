@@ -218,7 +218,7 @@ class PostWidget extends StatelessWidget {
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
-                                    content: Text('ダイアログ'),
+                                    content: TextFormField(),
                                   );
                                 },
                               );
