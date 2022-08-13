@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import 'main.dart';
 
 class MyPage extends StatelessWidget {
   const MyPage({super.key});
@@ -41,6 +44,24 @@ class MyPage extends StatelessWidget {
               alignment: Alignment.centerLeft,
               // 登録日
               child: Text('登録日：${user.metadata.creationTime!}'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () async {
+                // Google からサインアウト
+                await GoogleSignIn().signOut();
+                // Firebase からサインアウト
+                await FirebaseAuth.instance.signOut();
+                // SignInPage に遷移
+                // このページには戻れないようにします。
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) {
+                    return const SignInPage();
+                  }),
+                  (route) => false,
+                );
+              },
+              child: const Text('サインアウト'),
             ),
           ],
         ),
