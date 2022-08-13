@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_chat/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/post.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 Future<void> main() async {
@@ -69,3 +71,15 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 }
+
+final postsReference =
+    FirebaseFirestore.instance.collection('posts').withConverter<Post>(
+  // <> ここに変換したい型名をいれます。今回は Post です。
+  fromFirestore: ((snapshot, _) {
+    // 第二引数は使わないのでその場合は _ で不使用であることを分かりやすくしています。
+    return Post.fromFirestore(snapshot); // 先ほど定期着した fromFirestore がここで活躍します。
+  }),
+  toFirestore: ((value, _) {
+    return value.toMap(); // 先ほど適宜した toMap がここで活躍します。
+  }),
+);
