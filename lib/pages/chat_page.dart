@@ -72,7 +72,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) {
-                      return const ChatPage();
+                      return const ProfilePage();
                     },
                   ),
                 );
@@ -116,31 +116,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 },
               ),
             ),
-            // Expanded(
-            //   child: StreamBuilder<QuerySnapshot<Post>>(
-            //     // stream プロパティに snapshots() を与えると、コレクションの中のドキュメントをリアルタイムで監視することができます。
-            //     stream: postsReferenceWithConverter
-            //         .orderBy('createdAt')
-            //         .snapshots(),
-            //     // ここで受け取っている snapshot に stream で流れてきたデータ入っています。
-            //     builder: (context, snapshot) {
-            //       // docs には Collection に保存されたすべてのドキュメントが入ります。
-            //       // 取得までには時間がかかるのではじめは null が入っています。
-            //       // null の場合は空配列が代入されるようにしています。
-            //       final docs = snapshot.data?.docs ?? [];
-            //       return ListView.builder(
-            //         itemCount: docs.length,
-            //         itemBuilder: (context, index) {
-            //           // data() に Post インスタンスが入っています。
-            //           // これは withConverter を使ったことにより得られる恩恵です。
-            //           // 何もしなければこのデータ型は Map になります。
-            //           final post = docs[index].data();
-            //           return PostWidget(post: post);
-            //         },
-            //       );
-            //     },
-            //   ),
-            // ),
             Padding(
               padding: const EdgeInsets.all(8),
               child: TextFormField(

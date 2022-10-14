@@ -23,19 +23,19 @@ Future<void> main() async {
       overrides: [
         /// これだけでFirebaseFirestoreのモックを注入できる。
         firestoreProvider.overrideWithValue(FakeFirebaseFirestore()),
-        firebaseAuthProvider.overrideWithValue(
-          MockFirebaseAuth(
-            signedIn: true,
-            mockUser: MockUser(
-              isAnonymous: false,
-              uid: 'someuid',
-              email: 'bob@somedomain.com',
-              displayName: '若狹 健太',
-              photoURL:
-                  'https://pbs.twimg.com/profile_images/1510946043718160386/mPJ6v_Xf_400x400.jpg',
-            ),
-          ),
-        ),
+        // firebaseAuthProvider.overrideWithValue(
+        //   MockFirebaseAuth(
+        //     signedIn: true,
+        //     mockUser: MockUser(
+        //       isAnonymous: false,
+        //       uid: 'someuid',
+        //       email: 'ishiguro.taka@somedomain.com',
+        //       displayName: '石黒貴俊',
+        //       photoURL:
+        //           'https://pbs.twimg.com/profile_images/1510946043718160386/mPJ6v_Xf_400x400.jpg',
+        //     ),
+        //   ),
+        // ),
       ],
       child: const MyApp(),
     ),

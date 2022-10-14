@@ -1,30 +1,61 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-
 import 'package:flutter_chat/main.dart';
+import 'package:flutter_chat/providers/auth_provider.dart';
+import 'package:flutter_chat/providers/firestore_provider.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:network_image_mock/network_image_mock.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets(
+    'テストと投稿するとそれが画面上に正しく表示されるか',
+    (tester) async {
+      /// NetworkImageのためのモック
+      await mockNetworkImagesFor(() async {
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              /// これだけでFirebaseFirestoreのモックを注入できる。
+              firestoreProvider.overrideWithValue(FakeFirebaseFirestore()),
+              firebaseAuthProvider.overrideWithValue(
+                MockFirebaseAuth(
+                  /// 初期からログイン状態とする
+                  signedIn: true,
+                  mockUser: MockUser(
+                    isAnonymous: false,
+                    uid: 'someuid',
+                    email: 'bob@somedomain.com',
+                    displayName: '若狹 健太',
+                    photoURL: 'https://example.com/image.png',
+                  ),
+                ),
+              ),
+            ],
+            child: const MyApp(),
+          ),
+        );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+        /// 投稿前はテストと書かれたWidgetは存在しない
+        expect(find.text('テスト'), findsNothing);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+        /// PostPageが表示されるまで待つ
+        await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+        /// テキストを入力する
+        await tester.enterText(find.byType(TextFormField), 'テスト');
+
+        /// キーボードの完了ボタンを押す
+        await tester.testTextInput.receiveAction(TextInputAction.done);
+        await tester.pumpAndSettle();
+
+        /// 投稿後なのでテストと書かれたWidgetがひとつ存在する
+        expect(find.text('テスト'), findsOneWidget);
+
+        /// 投稿者のユーザー名もひとつ存在する
+        expect(find.text('若狹 健太'), findsOneWidget);
+      });
+    },
+  );
 }
