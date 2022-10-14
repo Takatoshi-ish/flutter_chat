@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/post/post.dart';
 import '../providers/posts_provider.dart';
+import '../providers/posts_reference_provider.dart';
 import '../references.dart';
 import '../widgets/post_widget.dart';
 import 'profile_page.dart';
@@ -32,7 +33,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       posterImageUrl: posterImageUrl,
       posterId: posterId,
       // doc の引数を空にするとランダムなIDが採番されます
-      reference: postsReferenceWithConverter.doc(),
+      reference: ref.read(postsReferenceProvider).doc(),
     );
 
     // 先ほど作った newDocumentReference のset関数を実行するとそのドキュメントにデータが保存されます。
